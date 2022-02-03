@@ -1,34 +1,13 @@
-import React, { Fragment, useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
 import usersApi from "../../api/userApi";
 import EventsTimeline from "../EventsTimeline/EventsTimeline";
+import UserList from "../UserList/UserList";
 import "./App.css";
 
 function App() {
-  const [availableUsers, setAvailableUsers] = useState(null);
   const [userId, setUserId] = useState(null);
   const [userEvents, setUserEvents] = useState([]);
-
-  useEffect(() => {
-    const generateUserList = async () => {
-      const { data: users } = await usersApi.get("/");
-      setAvailableUsers(
-        users.map((id) => (
-          <Fragment key={id}>
-            <Divider />
-            <ListItem button onClick={() => setUserId(id)}>
-              <ListItemText>{id}</ListItemText>
-            </ListItem>
-          </Fragment>
-        ))
-      );
-    };
-    generateUserList();
-  }, []);
 
   useEffect(() => {
     const getUserEvents = async () => {
@@ -49,6 +28,10 @@ function App() {
     setUserEvents(events);
   }, [userId]);
 
+  const userClick = useCallback((id) => {
+    setUserId(id);
+  }, []);
+
   return (
     <div className="App">
       {userId && userEvents.length ? (
@@ -59,7 +42,7 @@ function App() {
       ) : (
         <>
           <h2>User IDs - Pick One</h2>
-          <List>{availableUsers}</List>
+          <UserList handleClick={userClick} />
         </>
       )}
     </div>

@@ -1,12 +1,7 @@
 .App {
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 2rem;
-
-  .user-ids {
-    list-style-type: none;
-    .user-ids__entry {
-      font-size: large;
-      font-weight: 600;
-    }
-  }
+  text-align: center;
 }

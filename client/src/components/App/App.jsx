@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Divider } from "antd";
 import Button from "@mui/material/Button";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import Divider from "@mui/material/Divider";
 import usersApi from "../../api/userApi";
 import "./App.css";
 import EventsTimeline from "../EventsTimeline/EventsTimeline";
@@ -17,12 +20,9 @@ function App() {
         users.map((id) => (
           <>
             <Divider key={`${id}_divider`} />
-            <li
-              key={`${id}_item`}
-              onClick={() => setUserId(id)}
-              className="user-ids__entry">
-              {id}
-            </li>
+            <ListItem button key={`${id}_item`} onClick={() => setUserId(id)}>
+              <ListItemText>{id}</ListItemText>
+            </ListItem>
           </>
         ))
       );
@@ -54,7 +54,7 @@ function App() {
       ) : (
         <>
           <h2>User IDs - Pick One</h2>
-          <ul className="user-ids">{availableUsers}</ul>
+          <List>{availableUsers}</List>
         </>
       )}
     </div>

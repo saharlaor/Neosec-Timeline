@@ -1,14 +1,15 @@
 .App {
-  display: inline-block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding: 2rem;
-}
-
-.App .user-ids {
-  list-style-type: none;
-}
-
-.App .user-ids .user-ids__entry {
-  font-size: large;
-  font-weight: 600;
+  text-align: center;
 }
 /*# sourceMappingURL=App.css.map */

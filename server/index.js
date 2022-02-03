@@ -2,7 +2,7 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const { getUsers, getUser } = require("./utils/file");
+const { getUsers, getUser, deleteEvent } = require("./utils/file");
 require("dotenv").config();
 
 // Constants
@@ -17,8 +17,11 @@ app.use(express.static(PUBLIC_PATH));
 
 // Endpoints
 // GET
-app.get("/users", getUsers);
-app.get("/users/:id", getUser);
+app.get("/api/users", getUsers);
+app.get("/api/users/:id", getUser);
+
+// DELETE
+app.delete("/api/events/:id", deleteEvent);
 
 // Fallback
 app.get("*", (req, res) => {

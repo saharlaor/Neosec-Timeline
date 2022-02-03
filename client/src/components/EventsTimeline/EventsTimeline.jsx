@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import DeleteIcon from "@mui/icons-material/Delete";
 import Timeline from "@mui/lab/Timeline";
 import TimelineItem from "@mui/lab/TimelineItem";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
@@ -12,8 +13,8 @@ import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
 import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
+import eventApi from "../../api/eventApi";
 import "./EventsTimeline.css";
-import { useState } from "react";
 
 const METHOD_COLOR = {
   GET: "blue",
@@ -23,7 +24,7 @@ const METHOD_COLOR = {
   DELETE: "red",
 };
 
-function EventsTimeline({ events }) {
+function EventsTimeline({ events, handleRefresh }) {
   const [chosenEvent, setChosenEvent] = useState(0);
   const [displayedEvents, setDisplayedEvents] = useState();
   const [displayMargin, setDisplayMargin] = useState(3);
@@ -33,20 +34,27 @@ function EventsTimeline({ events }) {
       Math.max(0, chosenEvent - displayMargin),
       Math.min(chosenEvent + displayMargin + 1, events.length)
     );
+
+    const handleEventClick = (index) => {
+      let newIndex;
+      if (chosenEvent < 7) {
+        newIndex = Math.max(0, chosenEvent - displayMargin) + index;
+      } else if (chosenEvent > events.length - displayMargin * 2) {
+        newIndex = chosenEvent + index - displayMargin;
+      } else {
+        newIndex = chosenEvent + index;
+      }
+      setChosenEvent(newIndex);
+    };
+
+    const handleEventDelete = async (id) => {
+      debugger;
+      await eventApi.delete(`/${id}`);
+      await handleRefresh();
+    };
+
     const eventEls = relevantEvents.map(
       ({ id, timestamp, method, uri }, index) => {
-        const handleEventClick = (index) => {
-          let newIndex;
-          if (chosenEvent < 7) {
-            newIndex = Math.max(0, chosenEvent - displayMargin) + index;
-          } else if (chosenEvent > events.length - displayMargin * 2) {
-            newIndex = chosenEvent + index - displayMargin;
-          } else {
-            newIndex = chosenEvent + index;
-          }
-          setChosenEvent(newIndex);
-        };
-
         return (
           <TimelineItem
             className={
@@ -72,12 +80,16 @@ function EventsTimeline({ events }) {
               </span>{" "}
               - {uri}
             </TimelineContent>
+            <Button
+              startIcon={<DeleteIcon />}
+              onClick={() => handleEventDelete(id)}
+            />
           </TimelineItem>
         );
       }
     );
     setDisplayedEvents(eventEls);
-  }, [chosenEvent, displayMargin, events]);
+  }, [chosenEvent, displayMargin, events, handleRefresh]);
 
   const handleMarginChange = (e) => {
     setDisplayMargin(e.target.value);

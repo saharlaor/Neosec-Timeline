@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import usersApi from "../../api/userApi";
-import "./App.css";
 import EventsTimeline from "../EventsTimeline/EventsTimeline";
+import "./App.css";
 
 function App() {
   const [availableUsers, setAvailableUsers] = useState(null);
@@ -44,12 +44,17 @@ function App() {
     setUserEvents(null);
   };
 
+  const refreshEvents = useCallback(async () => {
+    const { data: events } = await usersApi.get(`/${userId}`);
+    setUserEvents(events);
+  }, [userId]);
+
   return (
     <div className="App">
       {userId && userEvents.length ? (
         <>
           <Button onClick={resetUser}>&lt; Back</Button>
-          <EventsTimeline events={userEvents} />
+          <EventsTimeline events={userEvents} handleRefresh={refreshEvents} />
         </>
       ) : (
         <>

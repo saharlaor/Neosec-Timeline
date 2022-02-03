@@ -22,4 +22,28 @@ function getUsers(req, res) {
   }
 }
 
-module.exports = { getUsers };
+function getUser(req, res) {
+  try {
+    const buffer = fs.readFileSync(JSON_PATH);
+    const data = JSON.parse(buffer);
+
+    const id = req.params.id;
+    if (!id) {
+      throw Error({ code: 404, message: `User NOT Found` });
+    }
+
+    const events = data.filter(({ user_id }) => user_id === id);
+    if (!events) {
+      throw Error({ code: 404, message: `User ${id} Not Found` });
+    }
+    const eventsData = events.map(({ timestamp, method, call_path: uri }) => {
+      return { timestamp, method, uri };
+    });
+
+    res.send(eventsData);
+  } catch ({ code, message }) {
+    res.status(code || 500).send(message || "Something Went Wrong");
+  }
+}
+
+module.exports = { getUsers, getUser };

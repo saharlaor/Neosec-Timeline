@@ -1,6 +1,6 @@
 // Imports
 const express = require("express");
-const { getUsers } = require("./utils/file");
+const { getUsers, getUser } = require("./utils/file");
 require("dotenv").config();
 
 // Constants
@@ -13,6 +13,7 @@ app.use(express.json());
 // Endpoints
 // GET
 app.get("/users", getUsers);
+app.get("/users/:id", getUser);
 
 // Start server
 app.listen(PORT, () => console.log(`Server listening on ${PORT}`));

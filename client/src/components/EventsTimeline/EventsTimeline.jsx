@@ -48,9 +48,12 @@ function EventsTimeline({ events, handleRefresh }) {
     };
 
     const handleEventDelete = async (id) => {
-      debugger;
-      await eventApi.delete(`/${id}`);
-      await handleRefresh();
+      try {
+        await eventApi.delete(`/${id}`);
+        await handleRefresh();
+      } catch (err) {
+        console.log(err);
+      }
     };
 
     const eventEls = relevantEvents.map(

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -18,12 +18,12 @@ function App() {
       const { data: users } = await usersApi.get("/");
       setAvailableUsers(
         users.map((id) => (
-          <>
-            <Divider key={`${id}_divider`} />
-            <ListItem button key={`${id}_item`} onClick={() => setUserId(id)}>
+          <Fragment key={id}>
+            <Divider />
+            <ListItem button onClick={() => setUserId(id)}>
               <ListItemText>{id}</ListItemText>
             </ListItem>
-          </>
+          </Fragment>
         ))
       );
     };

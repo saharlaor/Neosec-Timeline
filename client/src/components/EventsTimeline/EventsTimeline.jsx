@@ -1,4 +1,7 @@
 import React, { useEffect } from "react";
+import Button from "@mui/material/Button";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import Timeline from "@mui/lab/Timeline";
 import TimelineItem from "@mui/lab/TimelineItem";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
@@ -51,7 +54,6 @@ function EventsTimeline({ events }) {
         </TimelineItem>
       )
     );
-    console.log("eventEls", eventEls);
     setDisplayedEvents(eventEls);
   }, [chosenEvent, displayMargin, events]);
 
@@ -64,13 +66,26 @@ function EventsTimeline({ events }) {
     } else {
       newIndex = chosenEvent + index;
     }
-    console.log("chosenEvent", newIndex);
     setChosenEvent(newIndex);
+  };
+
+  const handleUpClick = () => {
+    setChosenEvent((prev) => Math.max(0, prev - 1));
+  };
+
+  const handleDownClick = () => {
+    setChosenEvent((prev) => Math.min(prev + 1, events.length));
   };
 
   return (
     <div className="EventsTimeline">
+      <Button color="primary" variant="contained" onClick={handleUpClick}>
+        <ArrowDropUpIcon />
+      </Button>
       <Timeline>{displayedEvents}</Timeline>
+      <Button color="primary" variant="contained" onClick={handleDownClick}>
+        <ArrowDropDownIcon />
+      </Button>
     </div>
   );
 }

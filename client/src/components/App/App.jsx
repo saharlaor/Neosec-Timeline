@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Divider } from "antd";
+import Button from "@mui/material/Button";
 import usersApi from "../../api/userApi";
 import "./App.css";
 import EventsTimeline from "../EventsTimeline/EventsTimeline";
@@ -38,10 +39,18 @@ function App() {
     getUserEvents();
   }, [userId]);
 
+  const resetUser = () => {
+    setUserId(null);
+    setUserEvents(null);
+  };
+
   return (
     <div className="App">
       {userId && userEvents.length ? (
-        <EventsTimeline events={userEvents} />
+        <>
+          <Button onClick={resetUser}>&lt; Back</Button>
+          <EventsTimeline events={userEvents} />
+        </>
       ) : (
         <>
           <h2>User IDs - Pick One</h2>

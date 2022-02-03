@@ -8,6 +8,17 @@
           flex-direction: column;
 }
 
+.EventsTimeline .MuiTimelineItem-root.active-event {
+  background-color: #eef5ff;
+  border-radius: 0.5rem;
+  -webkit-box-shadow: #fff inset 0 0 12px 0px;
+          box-shadow: #fff inset 0 0 12px 0px;
+}
+
+.EventsTimeline .MuiTimelineItem-root:hover {
+  cursor: pointer;
+}
+
 .method {
   padding: 2px;
   border: 2px solid;

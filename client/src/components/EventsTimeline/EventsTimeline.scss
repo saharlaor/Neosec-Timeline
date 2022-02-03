@@ -1,6 +1,16 @@
 .EventsTimeline {
   display: flex;
   flex-direction: column;
+  .MuiTimelineItem-root {
+    &.active-event {
+      background-color: #eef5ff;
+      border-radius: 0.5rem;
+      box-shadow: #fff inset 0 0 12px 0px;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .method {

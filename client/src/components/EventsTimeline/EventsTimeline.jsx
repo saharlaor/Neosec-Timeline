@@ -38,9 +38,9 @@ function EventsTimeline({ events }) {
         const handleEventClick = (index) => {
           let newIndex;
           if (chosenEvent < 7) {
-            newIndex = Math.max(0, chosenEvent - 3) + index;
-          } else if (chosenEvent > events.length - 6) {
-            newIndex = chosenEvent + index - 3;
+            newIndex = Math.max(0, chosenEvent - displayMargin) + index;
+          } else if (chosenEvent > events.length - displayMargin * 2) {
+            newIndex = chosenEvent + index - displayMargin;
           } else {
             newIndex = chosenEvent + index;
           }
@@ -48,7 +48,12 @@ function EventsTimeline({ events }) {
         };
 
         return (
-          <TimelineItem key={id} onClick={() => handleEventClick(index)}>
+          <TimelineItem
+            className={
+              index === Math.min(chosenEvent, displayMargin) && "active-event"
+            }
+            key={id}
+            onClick={() => handleEventClick(index)}>
             <TimelineOppositeContent color="text.secondary">
               {timestamp}
             </TimelineOppositeContent>
@@ -94,12 +99,14 @@ function EventsTimeline({ events }) {
           onChange={handleMarginChange}
           displayEmpty
           inputProps={{ "aria-label": "Without label" }}>
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
           <MenuItem value={1}>1</MenuItem>
           <MenuItem value={2}>2</MenuItem>
           <MenuItem value={3}>3</MenuItem>
+          <MenuItem value={4}>4</MenuItem>
+          <MenuItem value={5}>5</MenuItem>
+          <MenuItem value={6}>6</MenuItem>
+          <MenuItem value={7}>7</MenuItem>
+          <MenuItem value={8}>8</MenuItem>
         </Select>
       </FormControl>
       <Button color="primary" variant="contained" onClick={handleUpClick}>

@@ -1,4 +1,7 @@
 import React, { useEffect } from "react";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
@@ -31,42 +34,48 @@ function EventsTimeline({ events }) {
       Math.min(chosenEvent + displayMargin + 1, events.length)
     );
     const eventEls = relevantEvents.map(
-      ({ id, timestamp, method, uri }, index) => (
-        <TimelineItem key={id} onClick={() => handleEventClick(index)}>
-          <TimelineOppositeContent color="text.secondary">
-            {timestamp}
-          </TimelineOppositeContent>
-          <TimelineSeparator>
-            <TimelineDot />
-            <TimelineConnector />
-          </TimelineSeparator>
-          <TimelineContent>
-            <span
-              style={{
-                color: METHOD_COLOR[method] || "yellow",
-                borderColor: METHOD_COLOR[method] || "yellow",
-              }}
-              className="method">
-              {method}
-            </span>{" "}
-            - {uri}
-          </TimelineContent>
-        </TimelineItem>
-      )
+      ({ id, timestamp, method, uri }, index) => {
+        const handleEventClick = (index) => {
+          let newIndex;
+          if (chosenEvent < 7) {
+            newIndex = Math.max(0, chosenEvent - 3) + index;
+          } else if (chosenEvent > events.length - 6) {
+            newIndex = chosenEvent + index - 3;
+          } else {
+            newIndex = chosenEvent + index;
+          }
+          setChosenEvent(newIndex);
+        };
+
+        return (
+          <TimelineItem key={id} onClick={() => handleEventClick(index)}>
+            <TimelineOppositeContent color="text.secondary">
+              {timestamp}
+            </TimelineOppositeContent>
+            <TimelineSeparator>
+              <TimelineDot />
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent>
+              <span
+                style={{
+                  color: METHOD_COLOR[method] || "yellow",
+                  borderColor: METHOD_COLOR[method] || "yellow",
+                }}
+                className="method">
+                {method}
+              </span>{" "}
+              - {uri}
+            </TimelineContent>
+          </TimelineItem>
+        );
+      }
     );
     setDisplayedEvents(eventEls);
   }, [chosenEvent, displayMargin, events]);
 
-  const handleEventClick = (index) => {
-    let newIndex;
-    if (chosenEvent < 7) {
-      newIndex = Math.max(0, chosenEvent - 3) + index;
-    } else if (chosenEvent > events.length - 6) {
-      newIndex = chosenEvent + index - 3;
-    } else {
-      newIndex = chosenEvent + index;
-    }
-    setChosenEvent(newIndex);
+  const handleMarginChange = (e) => {
+    setDisplayMargin(e.target.value);
   };
 
   const handleUpClick = () => {
@@ -79,6 +88,20 @@ function EventsTimeline({ events }) {
 
   return (
     <div className="EventsTimeline">
+      <FormControl sx={{ m: 1, minWidth: 120 }}>
+        <Select
+          value={displayMargin}
+          onChange={handleMarginChange}
+          displayEmpty
+          inputProps={{ "aria-label": "Without label" }}>
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value={1}>1</MenuItem>
+          <MenuItem value={2}>2</MenuItem>
+          <MenuItem value={3}>3</MenuItem>
+        </Select>
+      </FormControl>
       <Button color="primary" variant="contained" onClick={handleUpClick}>
         <ArrowDropUpIcon />
       </Button>

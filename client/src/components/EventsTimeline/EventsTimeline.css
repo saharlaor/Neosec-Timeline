@@ -6,6 +6,8 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  width: 80vw;
+  max-width: 1200px;
 }
 
 .EventsTimeline .MuiTimelineItem-root.active-event {

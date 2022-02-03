@@ -1,6 +1,8 @@
 .EventsTimeline {
   display: flex;
   flex-direction: column;
+  width: 80vw;
+  max-width: 1200px;
   .MuiTimelineItem-root {
     &.active-event {
       background-color: #eef5ff;

@@ -61,7 +61,9 @@ function EventsTimeline({ events, handleRefresh }) {
         return (
           <TimelineItem
             className={
-              index === Math.min(chosenEvent, displayMargin) && "active-event"
+              index === Math.min(chosenEvent, displayMargin)
+                ? "active-event"
+                : "inactive-event"
             }
             key={id}
             onClick={() => handleEventClick(index)}>

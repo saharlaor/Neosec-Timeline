@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Divider } from "antd";
 import usersApi from "../../api/userApi";
 import "./App.css";
+import EventsTimeline from "../EventsTimeline/EventsTimeline";
 
 function App() {
-  const [userId, setUserId] = useState(null);
   const [availableUsers, setAvailableUsers] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [userEvents, setUserEvents] = useState([]);
 
   useEffect(() => {
     const generateUserList = async () => {
@@ -27,10 +29,19 @@ function App() {
     generateUserList();
   }, []);
 
+  useEffect(() => {
+    const getUserEvents = async () => {
+      const { data: events } = await usersApi.get(`/${userId}`);
+
+      setUserEvents(events);
+    };
+    getUserEvents();
+  }, [userId]);
+
   return (
     <div className="App">
-      {userId ? (
-        <></>
+      {userId && userEvents.length ? (
+        <EventsTimeline events={userEvents} />
       ) : (
         <>
           <h2>User IDs - Pick One</h2>

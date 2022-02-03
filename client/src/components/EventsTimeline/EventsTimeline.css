@@ -1,4 +1,10 @@
 .EventsTimeline {
   display: inline-block;
 }
-/*# sourceMappingURL=a.css.map */
+
+.method {
+  padding: 2px;
+  border: 2px solid;
+  border-radius: 5px;
+}
+/*# sourceMappingURL=EventsTimeline.css.map */

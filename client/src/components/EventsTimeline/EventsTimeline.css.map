@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,eAAe,CAAC;EACd,OAAO,EAAE,YAAY;CACtB;;AAED,AAAA,OAAO,CAAC;EACN,OAAO,EAAE,GAAG;EACZ,MAAM,EAAE,SAAS;EACjB,aAAa,EAAE,GAAG;CACnB",
+    "sources": [
+        "EventsTimeline.scss"
+    ],
+    "names": [],
+    "file": "EventsTimeline.css"
+}

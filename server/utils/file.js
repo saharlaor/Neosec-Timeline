@@ -36,9 +36,11 @@ function getUser(req, res) {
     if (!events) {
       throw Error({ code: 404, message: `User ${id} Not Found` });
     }
-    const eventsData = events.map(({ timestamp, method, call_path: uri }) => {
-      return { timestamp, method, uri };
-    });
+    const eventsData = events.map(
+      ({ id, timestamp, method, call_path: uri }) => {
+        return { id, timestamp, method, uri };
+      }
+    );
 
     res.send(eventsData);
   } catch ({ code, message }) {

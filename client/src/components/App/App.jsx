@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Divider } from "antd";
 import usersApi from "../../api/userApi";
 import "./App.css";
 
@@ -9,25 +10,34 @@ function App() {
   useEffect(() => {
     const generateUserList = async () => {
       const { data: users } = await usersApi.get("/");
-      console.log("users", users);
       setAvailableUsers(
         users.map((id) => (
-          <li
-            key={id}
-            onClick={() => setUserId(id)}
-            className="user-ids__entry">
-            {id}
-          </li>
+          <>
+            <Divider key={`${id}_divider`} />
+            <li
+              key={`${id}_item`}
+              onClick={() => setUserId(id)}
+              className="user-ids__entry">
+              {id}
+            </li>
+          </>
         ))
       );
     };
     generateUserList();
   }, []);
 
-  return userId ? (
-    <div className="App"></div>
-  ) : (
-    <ul className="user-ids">{availableUsers}</ul>
+  return (
+    <div className="App">
+      {userId ? (
+        <></>
+      ) : (
+        <>
+          <h2>User IDs - Pick One</h2>
+          <ul className="user-ids">{availableUsers}</ul>
+        </>
+      )}
+    </div>
   );
 }
 

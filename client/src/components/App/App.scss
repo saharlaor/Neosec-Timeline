@@ -1,3 +1,12 @@
 .App {
   display: inline-block;
+  padding: 2rem;
+
+  .user-ids {
+    list-style-type: none;
+    .user-ids__entry {
+      font-size: large;
+      font-weight: 600;
+    }
+  }
 }

@@ -1,4 +1,14 @@
 .App {
   display: inline-block;
+  padding: 2rem;
+}
+
+.App .user-ids {
+  list-style-type: none;
+}
+
+.App .user-ids .user-ids__entry {
+  font-size: large;
+  font-weight: 600;
 }
 /*# sourceMappingURL=App.css.map */

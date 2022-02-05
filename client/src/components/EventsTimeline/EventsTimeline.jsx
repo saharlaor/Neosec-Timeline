@@ -36,14 +36,10 @@ function EventsTimeline({ events, handleRefresh }) {
     );
 
     const handleEventClick = (index) => {
-      let newIndex;
-      if (chosenEvent < 7) {
-        newIndex = Math.max(0, chosenEvent - displayMargin) + index;
-      } else if (chosenEvent > events.length - displayMargin * 2) {
-        newIndex = chosenEvent + index - displayMargin;
-      } else {
-        newIndex = chosenEvent + index;
-      }
+      const newIndex =
+        chosenEvent < displayMargin * 2 + 1
+          ? Math.max(0, chosenEvent - displayMargin) + index
+          : chosenEvent + index - displayMargin;
       setChosenEvent(newIndex);
     };
 
